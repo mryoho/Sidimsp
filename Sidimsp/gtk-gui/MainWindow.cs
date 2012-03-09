@@ -75,7 +75,7 @@ public partial class MainWindow
 		this.hbox4.Spacing = 6;
 		// Container child hbox4.Gtk.Box+BoxChild
 		this.SidimspLabel = new global::Gtk.Label ();
-		this.SidimspLabel.WidthRequest = 300;
+		this.SidimspLabel.WidthRequest = 400;
 		this.SidimspLabel.Name = "SidimspLabel";
 		this.SidimspLabel.LabelProp = global::Mono.Unix.Catalog.GetString ("Sidimsp");
 		this.hbox4.Add (this.SidimspLabel);
@@ -114,9 +114,12 @@ public partial class MainWindow
 		if ((this.Child != null)) {
 			this.Child.ShowAll ();
 		}
-		this.DefaultWidth = 443;
+		this.DefaultWidth = 542;
 		this.DefaultHeight = 300;
 		this.Show ();
 		this.DeleteEvent += new global::Gtk.DeleteEventHandler (this.OnDeleteEvent);
+		this.StartButton.Clicked += new global::System.EventHandler (this.OnStartButtonClicked);
+		this.StopButton.Clicked += new global::System.EventHandler (this.OnStopButtonClicked);
+		this.AboutButton.Clicked += new global::System.EventHandler (this.OnAboutButtonClicked);
 	}
 }

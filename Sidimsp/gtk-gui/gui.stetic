@@ -8,7 +8,7 @@
     <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <widget-library name="../bin/Debug/Sidimsp.exe" internal="true" />
   </import>
-  <widget class="Gtk.Window" id="MainWindow" design-size="443 300">
+  <widget class="Gtk.Window" id="MainWindow" design-size="542 300">
     <property name="MemberName" />
     <property name="Title" translatable="yes">MainWindow</property>
     <property name="WindowPosition">CenterOnParent</property>
@@ -28,6 +28,7 @@
                 <property name="Type">TextOnly</property>
                 <property name="Label" translatable="yes">Start</property>
                 <property name="UseUnderline">True</property>
+                <signal name="Clicked" handler="OnStartButtonClicked" />
               </widget>
               <packing>
                 <property name="Position">0</property>
@@ -51,6 +52,7 @@
                         <property name="Type">TextOnly</property>
                         <property name="Label" translatable="yes">Stop</property>
                         <property name="UseUnderline">True</property>
+                        <signal name="Clicked" handler="OnStopButtonClicked" />
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -82,7 +84,7 @@
                 <child>
                   <widget class="Gtk.Label" id="SidimspLabel">
                     <property name="MemberName" />
-                    <property name="WidthRequest">300</property>
+                    <property name="WidthRequest">400</property>
                     <property name="LabelProp" translatable="yes">Sidimsp</property>
                   </widget>
                   <packing>
@@ -97,6 +99,7 @@
                     <property name="Type">TextOnly</property>
                     <property name="Label" translatable="yes">About</property>
                     <property name="UseUnderline">True</property>
+                    <signal name="Clicked" handler="OnAboutButtonClicked" />
                   </widget>
                   <packing>
                     <property name="Position">1</property>
