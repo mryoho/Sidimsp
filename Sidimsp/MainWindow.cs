@@ -27,12 +27,12 @@ public partial class MainWindow : Gtk.Window
 
 	protected void OnStartButtonClicked (object sender, System.EventArgs e)
 	{
-		textview1.Buffer.Text = "Simulation started!";
+		textview1.Buffer.Text += "Simulation started!\n";
 	}
 	
 	
 	protected void OnStopButtonClicked (object sender, System.EventArgs e)
 	{
-		textview1.Buffer.Text = "Simulation stopped!";
+		textview1.Buffer.Text += "Simulation stopped!\n";
 	}
 }

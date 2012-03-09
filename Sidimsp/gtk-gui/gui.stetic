@@ -125,11 +125,18 @@
           </packing>
         </child>
         <child>
-          <widget class="Gtk.TextView" id="textview1">
+          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
             <property name="MemberName" />
-            <property name="Editable">False</property>
-            <property name="CursorVisible">False</property>
-            <property name="Text" translatable="yes" />
+            <property name="ShadowType">In</property>
+            <child>
+              <widget class="Gtk.TextView" id="textview1">
+                <property name="MemberName" />
+                <property name="ShowScrollbars">True</property>
+                <property name="Editable">False</property>
+                <property name="CursorVisible">False</property>
+                <property name="Text" translatable="yes" />
+              </widget>
+            </child>
           </widget>
           <packing>
             <property name="Position">1</property>
