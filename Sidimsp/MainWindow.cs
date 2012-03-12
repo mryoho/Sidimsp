@@ -38,16 +38,20 @@ public partial class MainWindow : Gtk.Window
 }
 
 	protected void OnStartButtonClicked (object sender, System.EventArgs e)
-	{
-		textview1.Buffer.Text += "Simulation started!\n";
+	{;
+		
+		if(StartButton.Label == "Start"){
+			textview1.Buffer.Text += "Simulation started!\n";
+		
+		//disable the start button
+			StartButton.Label = "Stop";
+		
 		ThreadPool.QueueUserWorkItem(startSimulation);
-	}
-	
-	protected void OnStopButtonClicked (object sender, System.EventArgs e)
-	{
-		StopProcessing = true;
-		textview1.Buffer.Clear ();
-		textview1.Buffer.Text += "Simulation stopped!\n";
+		}else{
+			StopProcessing = true;
+			textview1.Buffer.Clear ();
+			StartButton.Label = "Start";
+		}
 	}
 	
 	protected void startSimulation(object ob){
@@ -62,6 +66,9 @@ public partial class MainWindow : Gtk.Window
 				Thread.Sleep (100);
 			}
 		}
+		
+		//Return the label to "Start" since processing is done.
+		StartButton.Label = "Start";
 	}
 	
 	protected void startFCFS(object ob){
