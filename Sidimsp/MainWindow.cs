@@ -41,15 +41,21 @@ public partial class MainWindow : Gtk.Window
 	{;
 		
 		if(StartButton.Label == "Start"){
-			textview1.Buffer.Text += "Simulation started!\n";
-		
-		//disable the start button
-			StartButton.Label = "Stop";
+		//make sure the textviews are clear
+			textview1.Buffer.Clear();
+			textview2.Buffer.Clear();
+			textview3.Buffer.Clear();
+			
+		//change the start button to a stop button
+		StartButton.Label = "Stop";
+			
+		//disable scrolling on the textviews, scrolling while simulation is running causes application to crash
 		
 		ThreadPool.QueueUserWorkItem(startSimulation);
 		}else{
 			StopProcessing = true;
 			textview1.Buffer.Clear ();
+			//change the stop button to start
 			StartButton.Label = "Start";
 		}
 	}
@@ -63,6 +69,8 @@ public partial class MainWindow : Gtk.Window
 		for(int i=1; i <= 20; i++){
 			if(!StopProcessing){
 				textview1.Buffer.Text += ((i) + Environment.NewLine);
+				textview2.Buffer.Text += ((i) + Environment.NewLine);
+				textview3.Buffer.Text += ((i) + Environment.NewLine);
 				Thread.Sleep (100);
 			}
 		}
@@ -71,9 +79,17 @@ public partial class MainWindow : Gtk.Window
 		StartButton.Label = "Start";
 	}
 	
-	protected void startFCFS(object ob){
+	protected void startRoundRobin(object ob){
 			
+	}
+	
+	protected void startPriority(object ob){
 		
 	}
+	
+	protected void startFCFS(object ob){
+		
+	}
+	
 	
 }
