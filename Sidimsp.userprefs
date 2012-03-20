@@ -2,7 +2,8 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Sidimsp\MainWindow.cs">
     <Files>
-      <File FileName="Sidimsp\MainWindow.cs" Line="54" Column="21" />
+      <File FileName="Sidimsp\MainWindow.cs" Line="41" Column="4" />
+      <File FileName="Sidimsp\Process.cs" Line="15" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
