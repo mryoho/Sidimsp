@@ -51,7 +51,7 @@ public partial class MainWindow : Gtk.Window
 			
 		//disable scrolling on the textviews, scrolling while simulation is running causes application to crash
 		
-		ThreadPool.QueueUserWorkItem(startSimulation);
+		startSimulation();
 		}else{
 			StopProcessing = true;
 			textview1.Buffer.Clear ();
@@ -60,7 +60,7 @@ public partial class MainWindow : Gtk.Window
 		}
 	}
 	
-	protected void startSimulation(object ob){
+	protected void startSimulation(){
 		
 		StopProcessing = false;
 		NumGeneratedThreads = 50;
