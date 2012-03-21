@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sidimsp
 {
@@ -7,9 +8,9 @@ namespace Sidimsp
 		public ProcessQueue ()
 		{
 		}
-		public void addProcess() {}
-		public void removeProcess() {}
-		public void run() {}
+		public abstract void AddProcess(Process p);
+		public abstract void RemoveProcess(Process p);
+		public abstract void Run();
 		
 	}
 }
