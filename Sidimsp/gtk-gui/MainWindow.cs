@@ -21,7 +21,7 @@ public partial class MainWindow
 	private global::Gtk.Label label3;
 	private global::Gtk.Entry entry1;
 	private global::Gtk.Button StartButton;
-	
+    
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
