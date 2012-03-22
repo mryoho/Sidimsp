@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Sidimsp
 {
@@ -36,14 +37,23 @@ namespace Sidimsp
 		
 		private List< Pair< ProcessQueue, int > > _queues{ get; set;}
 		
+		
+		
 		// inherited methods
 		public override void AddProcess(Process p){
-			//queues[0].GetType
+			_queues[0].First.AddProcess(p);
 		}
 		
 		public override void RemoveProcess(Process p){}
 		
-		public override void Run() {}
+		
+		public override int Run() {
+			int time = 0;
+			//GlobalVar.WindowConsole.Buffer.Text += ("MultiLevelFeedbackQueue Running " + Environment.NewLine);
+			//Gtk.Application.Invoke();
+			Thread.Sleep(500);
+			return time;
+		}
 		
 		// other methods
 		public void AddQueue(ProcessQueue pq){

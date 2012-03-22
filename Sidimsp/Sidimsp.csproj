@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <RootNamespace>Sidimsp</RootNamespace>
     <AssemblyName>Sidimsp</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -72,6 +72,15 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Process.cs" />
     <Compile Include="ProcessQueue.cs" />
+    <Compile Include="RoundRobinQueue.cs" />
+    <Compile Include="MultiLevelFeedbackQueue.cs" />
+    <Compile Include="PriorityQueue.cs" />
+    <Compile Include="FirstComeFirstServedQueue.cs" />
+    <Compile Include="Core.cs" />
+    <Compile Include="Processor.cs" />
+    <Compile Include="Pair.cs" />
+    <Compile Include="GlobalVar.cs" />
+    <Compile Include="RunOnMainThread.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -12,14 +12,14 @@ public partial class MainWindow
 	private global::Gtk.VBox vbox4;
 	private global::Gtk.Label label1;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
-	private global::Gtk.TextView textview1;
+	private global::Gtk.TextView console;
 	private global::Gtk.VBox vbox3;
 	private global::Gtk.Label label2;
 	private global::Gtk.VBox vbox2;
-	private global::Gtk.ComboBox combobox2;
+	private global::Gtk.Entry numCores;
 	private global::Gtk.VBox vbox5;
 	private global::Gtk.Label label3;
-	private global::Gtk.Entry entry1;
+	private global::Gtk.Entry numProcesses;
 	private global::Gtk.Button StartButton;
     
 	protected virtual void Build ()
@@ -98,10 +98,10 @@ public partial class MainWindow
 		this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 		this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 		// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-		this.textview1 = new global::Gtk.TextView ();
-		this.textview1.CanFocus = true;
-		this.textview1.Name = "textview1";
-		this.GtkScrolledWindow.Add (this.textview1);
+		this.console = new global::Gtk.TextView ();
+		this.console.CanFocus = true;
+		this.console.Name = "console";
+		this.GtkScrolledWindow.Add (this.console);
 		this.vbox4.Add (this.GtkScrolledWindow);
 		global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.GtkScrolledWindow]));
 		w7.Position = 1;
@@ -128,10 +128,13 @@ public partial class MainWindow
 		this.vbox2.Name = "vbox2";
 		this.vbox2.Spacing = 6;
 		// Container child vbox2.Gtk.Box+BoxChild
-		this.combobox2 = global::Gtk.ComboBox.NewText ();
-		this.combobox2.Name = "combobox2";
-		this.vbox2.Add (this.combobox2);
-		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.combobox2]));
+		this.numCores = new global::Gtk.Entry ();
+		this.numCores.CanFocus = true;
+		this.numCores.Name = "numCores";
+		this.numCores.IsEditable = true;
+		this.numCores.InvisibleChar = '•';
+		this.vbox2.Add (this.numCores);
+		global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.numCores]));
 		w10.Position = 0;
 		w10.Expand = false;
 		w10.Fill = false;
@@ -149,13 +152,13 @@ public partial class MainWindow
 		w11.Expand = false;
 		w11.Fill = false;
 		// Container child vbox5.Gtk.Box+BoxChild
-		this.entry1 = new global::Gtk.Entry ();
-		this.entry1.CanFocus = true;
-		this.entry1.Name = "entry1";
-		this.entry1.IsEditable = true;
-		this.entry1.InvisibleChar = '●';
-		this.vbox5.Add (this.entry1);
-		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.entry1]));
+		this.numProcesses = new global::Gtk.Entry ();
+		this.numProcesses.CanFocus = true;
+		this.numProcesses.Name = "numProcesses";
+		this.numProcesses.IsEditable = true;
+		this.numProcesses.InvisibleChar = '●';
+		this.vbox5.Add (this.numProcesses);
+		global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox5 [this.numProcesses]));
 		w12.Position = 1;
 		w12.Expand = false;
 		w12.Fill = false;

@@ -7,10 +7,14 @@ namespace Sidimsp
 	{
 		public ProcessQueue ()
 		{
+			_processesQ = new Queue<Process>();
 		}
+		
+		protected Queue<Process> _processesQ;
+		
 		public abstract void AddProcess(Process p);
 		public abstract void RemoveProcess(Process p);
-		public abstract void Run();
+		public abstract int Run();
 		
 	}
 }

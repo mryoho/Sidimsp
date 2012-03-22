@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Sidimsp
 {
@@ -6,12 +7,14 @@ namespace Sidimsp
 	{
 		public FirstComeFirstServedQueue ()
 		{
+			
 		}
+		
 		
 		// inherited methods
 		public override void AddProcess (Process p)
 		{
-			throw new NotImplementedException ();
+			_processesQ.Enqueue( p );
 		}
 		
 		public override void RemoveProcess (Process p)
@@ -19,7 +22,11 @@ namespace Sidimsp
 			throw new NotImplementedException ();
 		}
 		
-		public override void Run() {}
+		public override int Run() {
+			int time = 0;
+			
+			return time;
+		}
 	}
 }
 
