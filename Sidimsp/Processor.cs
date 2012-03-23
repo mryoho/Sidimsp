@@ -81,12 +81,20 @@ namespace Sidimsp
 			int result = 0;
 			// run the core threads until finished
 			try {
+				//Start all of the threads
 				for(int i = 0; i < _numCores; i++){
 					coreThread = _coreThreadList[i];
-					coreThread.Start();				// start the thread
-					while(!coreThread.IsAlive);		// wait for process to start
-					coreThread.Join();				// run threads until all are finished
+					coreThread.Start ();
 				}
+				
+				//Join all of the threads
+				for(int i = 0; i < _numCores; i++){
+					coreThread = _coreThreadList[i];
+					coreThread.Join();
+				}
+				
+				//At this point all of the threads are complete
+				
 			}
 			catch (ThreadStateException e)
 			{
@@ -99,6 +107,7 @@ namespace Sidimsp
 			                        // was interrupted during a Wait
 			 result = 1;            // Result says there was an error
 			}	
+			Environment.ExitCode = result;
 			
 			// message displayed when threads are done
 			GlobalVar.WindowConsole.Buffer.Text += ("Processor Finished" + Environment.NewLine);
