@@ -44,9 +44,8 @@ public partial class MainWindow : Gtk.Window
 		//change the start button to a stop button
 		StartButton.Label = "Stop";
 			
-		//disable scrolling on the textviews, scrolling while simulation is running causes application to crash
-		
-		startSimulation();
+
+			startSimulation();
 		}else{
 			StopProcessing = true;
 			console.Buffer.Clear ();

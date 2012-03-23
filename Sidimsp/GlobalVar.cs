@@ -5,6 +5,7 @@ namespace Sidimsp
 {
 	public static class GlobalVar
 	{
+		static readonly object _locker = new object();
 	
 	    private static TextView _windowConsole;
 	    public static TextView WindowConsole
@@ -12,6 +13,11 @@ namespace Sidimsp
 			get{return _windowConsole;}
 			set{_windowConsole = value;}
 	    }
+		public static void OutputMessage( string text ){
+			lock(_locker){
+			WindowConsole.Buffer.Text += ( text + Environment.NewLine);
+			}
+		}
 	}
 }
 

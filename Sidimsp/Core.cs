@@ -54,16 +54,16 @@ namespace Sidimsp
 			});
 			*/
 			//RunOnMainThread.Run(this, "OutputMessage", new object[] { "Core " + _coreNumber + " Active" });
-	
-			
-			
-			_totalTime = _processQueue.Run();
+			GlobalVar.OutputMessage ("we are in core" + this._coreNumber);
+			Thread.Sleep (1000);
+			//for(int i = 0; i < 5; i++){
+				//Thread.Sleep (100);
+				//OutputMessage ("we are in core" + this._coreNumber);
+			//	_totalTime = _processQueue.Run();
+			//}
 			//Thread.Sleep(1);
 		}
-		
-		private void OutputMessage( string text ){
-			GlobalVar.WindowConsole.Buffer.Text += ( text + Environment.NewLine);
-		}
+
 	}
 }
 
