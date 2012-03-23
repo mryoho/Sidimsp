@@ -127,7 +127,7 @@
                 <child>
                   <widget class="Gtk.Label" id="label2">
                     <property name="MemberName" />
-                    <property name="LabelProp" translatable="yes"># of Processors</property>
+                    <property name="LabelProp" translatable="yes"># of Cores</property>
                   </widget>
                   <packing>
                     <property name="Position">0</property>

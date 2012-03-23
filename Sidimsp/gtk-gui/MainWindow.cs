@@ -21,7 +21,7 @@ public partial class MainWindow
 	private global::Gtk.Label label3;
 	private global::Gtk.Entry numProcesses;
 	private global::Gtk.Button StartButton;
-    
+	
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
@@ -117,7 +117,7 @@ public partial class MainWindow
 		// Container child vbox3.Gtk.Box+BoxChild
 		this.label2 = new global::Gtk.Label ();
 		this.label2.Name = "label2";
-		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("# of Processors");
+		this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("# of Cores");
 		this.vbox3.Add (this.label2);
 		global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.label2]));
 		w9.Position = 0;

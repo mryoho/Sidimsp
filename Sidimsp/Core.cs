@@ -53,7 +53,7 @@ namespace Sidimsp
 				//GlobalVar.WindowConsole.
 			});
 			*/
-			RunOnMainThread.Run(this, "OutputMessage", new object[] { "Core " + _coreNumber + " Active" });
+			//RunOnMainThread.Run(this, "OutputMessage", new object[] { "Core " + _coreNumber + " Active" });
 	
 			
 			
@@ -62,8 +62,7 @@ namespace Sidimsp
 		}
 		
 		private void OutputMessage( string text ){
-			GlobalVar.WindowConsole.Buffer.Text += ( text + Environment.NewLine + "  ");
-				
+			GlobalVar.WindowConsole.Buffer.Text += ( text + Environment.NewLine);
 		}
 	}
 }
