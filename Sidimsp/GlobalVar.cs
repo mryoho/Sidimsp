@@ -10,7 +10,7 @@ namespace Sidimsp
 	    private static TextView _windowConsole;
 	    public static TextView WindowConsole
 	    {
-			get{return _windowConsole;}
+			private get{return _windowConsole;}
 			set{_windowConsole = value;}
 	    }
 		public static void OutputMessage( string text ){

@@ -110,8 +110,7 @@ namespace Sidimsp
 			Environment.ExitCode = result;
 			
 			// message displayed when threads are done
-			GlobalVar.WindowConsole.Buffer.Text += ("Processor Finished" + Environment.NewLine);
-				
+			GlobalVar.OutputMessage("Processor Finished" + Environment.NewLine);
 		}
 		
 		public void LoadBalance() {

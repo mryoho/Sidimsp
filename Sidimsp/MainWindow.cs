@@ -10,13 +10,20 @@ using Sidimsp;
 
 public partial class MainWindow : Gtk.Window
 {
+	//This will handle a separate thread for the GUI
+	private BackgroundWorker bw = new BackgroundWorker();
+	
 	//This is checked by the running threads to determine whether to stop executing
-	private bool StopProcessing;
+	static bool StopProcessing;
 	
 	public MainWindow () : base(Gtk.WindowType.Toplevel)
 	{
 		Build ();
+		//Set the console globally so that any class can output
 		GlobalVar.WindowConsole = console;
+		//Make it so that 
+		bw.WorkerSupportsCancellation = true;
+		bw.WorkerReportsProgress = true;
 		Application.Init();
 		Application.Run();
 	}
@@ -38,13 +45,14 @@ public partial class MainWindow : Gtk.Window
 	{;
 		
 		if(StartButton.Label == "Start"){
-		//make sure the textviews are clear
+			//make sure the textviews are clear
 			console.Buffer.Clear();
 			
-		//change the start button to a stop button
-		StartButton.Label = "Stop";
+			//change the start button to a stop button
+			StartButton.Label = "Stop";
 			
-
+			//This starts the BackGroundWorker
+			bw.RunWorkerAsync();
 			startSimulation();
 		}else{
 			StopProcessing = true;
@@ -53,6 +61,13 @@ public partial class MainWindow : Gtk.Window
 			StartButton.Label = "Start";
 		}
 	}
+	
+	private void bw1_DoWork(object sender, DoWorkEventArgs e)
+	        {
+				
+	            startSimulation();
+	            e.Result = 1;
+	        }
 	
 	protected void startSimulation(){
 		
@@ -66,7 +81,7 @@ public partial class MainWindow : Gtk.Window
 		nCores = Convert.ToInt32(numCores.Text);
 		nProcesses = Convert.ToInt32(numProcesses.Text);
 		}catch(Exception e){
-			
+			Console.Write(e.StackTrace);
 		}
 		
 		//if input is invalid, don't start the simulation
