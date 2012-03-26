@@ -51,8 +51,15 @@ namespace Sidimsp
 			int time = 0;
 			//GlobalVar.WindowConsole.Buffer.Text += ("MultiLevelFeedbackQueue Running " + Environment.NewLine);
 			//Gtk.Application.Invoke();
-			Thread.Sleep(500);
+			//Thread.Sleep(500);
+			Console.WriteLine("MultiLevelFeedbackQueue Running");
 			return time;
+			Processes current;
+			if ( _queues[0].First.ProcessesQ.Count > 0 ) {
+				current = _queues[0].First.ProcessesQ.Dequeue;
+				
+			}
+			//if (_queue
 		}
 		
 		// other methods

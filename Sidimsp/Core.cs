@@ -43,7 +43,8 @@ namespace Sidimsp
 		// Note!! The logic for moving through processes DOES NOT GO HERE...it goes in the MultiLevelFeedbackQueue class's
 		//  run method.
 		public void DoWork() {
-			//Console.WriteLine( "In Core " + _coreNumber );
+			Console.WriteLine( "In Core " + _coreNumber );
+			_totalTime = _processQueue.Run();
 			//GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  ");
 			//Gtk.Application.Invoke(delegate( GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  "));
 			//Runtime.DispatchService.GuiDispatch( GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  ") ); // (new StatefulMessageHandler (UpdateGui), n);
