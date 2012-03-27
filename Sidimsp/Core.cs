@@ -58,9 +58,9 @@ namespace Sidimsp
 				
 				//Spin while we wait for the Processor to be reset
 				//THIS NEEDS TO BE IMPROVED, MAY NOT ALWAYS WORK
-				Thread.Sleep (100);
-
+				Processor.manualEvent2.WaitOne ();
 			}
+
 			Processor.SetFinished(_coreNumber);
 			
 		}
