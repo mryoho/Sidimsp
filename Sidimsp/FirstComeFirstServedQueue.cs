@@ -5,9 +5,9 @@ namespace Sidimsp
 {
 	public class FirstComeFirstServedQueue : ProcessQueue
 	{
-		public FirstComeFirstServedQueue ()
+		public FirstComeFirstServedQueue (int timeQuantum)
 		{
-			
+			this._timeQuantum = timeQuantum;
 		}
 		
 		

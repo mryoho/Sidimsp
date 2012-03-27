@@ -5,68 +5,58 @@ using System.Threading;
 
 namespace Sidimsp
 {
-	public class MultiLevelFeedbackQueue : ProcessQueue
+	public class MultiLevelFeedbackQueue
 	{
+		private List<ProcessQueue> _queues{ get; set;}
+		
 		public MultiLevelFeedbackQueue ( List<int> queueTypes, List<int> quantums)
 		{
-			// initialize member variables
-			_queues = new List<Pair<ProcessQueue, int>>();
+			//Stores each of the queues (PriorityQueue, RoundRobinQueue, FCFSQueue)
+			_queues = new List<ProcessQueue>();
 			
-			// Create the multilevelfeedbackqueues based on the number of queue types provided
-			Pair< ProcessQueue, int > newPair; 			// reference used to create new pairs
+			// Create the multilevelfeedbackqueue based on the number of queue types provided
 			for( int i = 0; i < queueTypes.Count; i++ ){
 				switch( queueTypes[i] ) {
 				case 0:
-					FirstComeFirstServedQueue newFCFS = new FirstComeFirstServedQueue();
-					newPair = new Pair<ProcessQueue, int>(newFCFS, quantums[i]);
-					_queues.Add( newPair );
+					_queues.Add (new PriorityQueue(quantums[i]));
 					break;
 				case 1:
-					PriorityQueue newPQ = new PriorityQueue();
-					newPair = new Pair<ProcessQueue, int>(newPQ, quantums[i]);
-					_queues.Add( newPair );
+					_queues.Add (new RoundRobinQueue(quantums[i], 2));
 					break;
 				case 2:
-					RoundRobinQueue newRRQ = new RoundRobinQueue();
-					newPair = new Pair<ProcessQueue, int>(newRRQ, quantums[i]);
-					_queues.Add( newPair );
+					_queues.Add (new FirstComeFirstServedQueue(quantums[i]));
 					break;
 				}
 			}
 		}
 		
-		private List< Pair< ProcessQueue, int > > _queues{ get; set;}
-		
-		
-		
 		// inherited methods
-		public override void AddProcess(Process p){
-			_queues[0].First.AddProcess(p);
+		public void AddProcess(Process p){
+			_queues[0].AddProcess(p);
 		}
 		
-		public override void RemoveProcess(Process p){}
-		
-		
-		public override int Run() {
-			int time = 0;
+		//Take in the current time
+		public void Run(int time) {
 			//GlobalVar.WindowConsole.Buffer.Text += ("MultiLevelFeedbackQueue Running " + Environment.NewLine);
 			//Gtk.Application.Invoke();
 			//Thread.Sleep(500);
 			Console.WriteLine("MultiLevelFeedbackQueue Running");
-			return time;
-			Processes current;
-			if ( _queues[0].First.ProcessesQ.Count > 0 ) {
-				current = _queues[0].First.ProcessesQ.Dequeue;
+			
+			Process returnedProcess = null;
+			
+			//For each of the queues, check if they are empty, if not, process on that process
+			for(int i = 0; i < _queues.Count; i++){
+				
 				
 			}
-			//if (_queue
+		
+
 		}
 		
 		// other methods
 		public void AddQueue(ProcessQueue pq){
 			//_queues.Add(pq);
 		}
-		public void RemoveQueue(ProcessQueue pq){}
 	}
 }
 

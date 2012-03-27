@@ -35,7 +35,7 @@ namespace Sidimsp
 		// methods
 		
 		// right now all this is supposed to do is write a message to the GUI console and then run the actions on
-		// the multiLevelFeedback queue. The problem is that I can't get the GUI to update from inisde this thread.
+		// the multiLevelFeedback queue. The problem is that I can't get the GUI to update from inside this thread.
 		// I have tried methods from the following websites:
 		// http://eric.extremeboredom.net/2004/12/25/113
 		// http://www.mono-project.com/Responsive_Applications
@@ -43,25 +43,26 @@ namespace Sidimsp
 		// Note!! The logic for moving through processes DOES NOT GO HERE...it goes in the MultiLevelFeedbackQueue class's
 		//  run method.
 		public void DoWork() {
-			Console.WriteLine( "In Core " + _coreNumber );
-			_totalTime = _processQueue.Run();
-			//GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  ");
-			//Gtk.Application.Invoke(delegate( GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  "));
-			//Runtime.DispatchService.GuiDispatch( GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  ") ); // (new StatefulMessageHandler (UpdateGui), n);
-			/*
-			Gtk.Application.Invoke(delegate {
-				GlobalVar.WindowConsole.Buffer.Text += ("Core " + _coreNumber + " Active " + Environment.NewLine + "  ");
-				//GlobalVar.WindowConsole.
-			});
-			*/
-			//RunOnMainThread.Run(this, "OutputMessage", new object[] { "Core " + _coreNumber + " Active" });
-			GlobalVar.OutputMessage ("we are in core" + this._coreNumber);
-			//for(int i = 0; i < 5; i++){
-				//Thread.Sleep (1);
-				//GlobalVar.OutputMessage("we are in core" + this._coreNumber);
-			//	_totalTime = _processQueue.Run();
-			//}
-			//Thread.Sleep(1);
+			//Wait for the Processor to tell us that we are ready to process
+			while(true){
+				if(Processor.systemTime > 3) break;
+				
+				//Wait for the processor to tell us to do work
+				Processor.manualEvent.WaitOne();
+				
+				//Do Work
+				GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+				Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+				//_processQueue.Run(Processor.systemTime);
+				Processor.SetFinished(_coreNumber);
+				
+				//Spin while we wait for the Processor to be reset
+				//THIS NEEDS TO BE IMPROVED, MAY NOT ALWAYS WORK
+				Thread.Sleep (100);
+
+			}
+			Processor.SetFinished(_coreNumber);
+			
 		}
 
 	}

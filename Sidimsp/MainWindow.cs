@@ -11,7 +11,7 @@ using Sidimsp;
 public partial class MainWindow : Gtk.Window
 {
 	//This will handle a separate thread for the GUI
-	private BackgroundWorker bw = new BackgroundWorker();
+	BackgroundWorker bw = new BackgroundWorker();
 	
 	//This is checked by the running threads to determine whether to stop executing
 	static bool StopProcessing;
@@ -52,7 +52,7 @@ public partial class MainWindow : Gtk.Window
 			StartButton.Label = "Stop";
 			
 			//This starts the BackGroundWorker
-			bw.RunWorkerAsync();
+			//bw.RunWorkerAsync();
 			startSimulation();
 		}else{
 			StopProcessing = true;
@@ -62,9 +62,8 @@ public partial class MainWindow : Gtk.Window
 		}
 	}
 	
-	private void bw1_DoWork(object sender, DoWorkEventArgs e)
+	private void bw_DoWork(object sender, DoWorkEventArgs e)
 	        {
-				
 	            startSimulation();
 	            e.Result = 1;
 	        }
@@ -85,7 +84,7 @@ public partial class MainWindow : Gtk.Window
 		}
 		
 		//if input is invalid, don't start the simulation
-		if(nCores <= 0 || nProcesses <= 0){
+		if((nCores <= 0 || nCores > 64) || nProcesses <= 0){
 			console.Buffer.Text += "Invalid input for # of cores or # of processes.";
 		}else{
 			List<int> queues = new List<int>();

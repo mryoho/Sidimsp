@@ -5,14 +5,14 @@ namespace Sidimsp
 {
 	public class RoundRobinQueue : ProcessQueue
 	{
-		public RoundRobinQueue() {}
 		
-		public RoundRobinQueue (int quantum)
+		public RoundRobinQueue (int timeQuantum, int RRQuantum)
 		{
-			this.quantum = quantum;
+			this._timeQuantum = timeQuantum;
+			this._RRquantum = RRQuantum;
 		}
 		
-		private int quantum{ get; set; }
+		private int _RRquantum;
 		
 		// Methods
 		public override void AddProcess(Process p) {

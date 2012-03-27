@@ -71,7 +71,6 @@
     <Compile Include="FirstComeFirstServedQueue.cs" />
     <Compile Include="Core.cs" />
     <Compile Include="Processor.cs" />
-    <Compile Include="Pair.cs" />
     <Compile Include="GlobalVar.cs" />
     <Compile Include="RunOnMainThread.cs" />
   </ItemGroup>

@@ -4,11 +4,10 @@ namespace Sidimsp
 {
 	public class PriorityQueue : ProcessQueue
 	{
-		public PriorityQueue ()
+		public PriorityQueue (int timeQuantum)
 		{
+			this._timeQuantum = timeQuantum;
 		}
-		
-		
 		
 		// inherited methods
 		public override void AddProcess (Process p)
