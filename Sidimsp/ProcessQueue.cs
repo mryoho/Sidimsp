@@ -24,6 +24,7 @@ namespace Sidimsp
 				Console.WriteLine("num processes is: " + ProcessesQ.Count.ToString());
 				return true;	
 			}else{
+				Console.WriteLine ("num processes is " + ProcessesQ.Count.ToString());
 				return false;
 			}
 		}

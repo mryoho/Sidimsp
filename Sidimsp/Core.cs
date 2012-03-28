@@ -15,6 +15,7 @@ namespace Sidimsp
 	{
 		public Core (int coreNumber, List<int> queueTypes, List<int> quantums)
 		{
+			processingTimeRemaining = 0;
 			_processQueue = new MultiLevelFeedbackQueue( queueTypes, quantums );
 			_coreNumber = coreNumber;
 			
@@ -25,6 +26,13 @@ namespace Sidimsp
 			get{return this._processQueue;}
 			set{this._processQueue = value;}
 		}
+		
+		
+		//This stores the total amount of processingTimeRemaining
+		//Increase when adding a process to this core
+		//Decrement when doing work on the processes
+		public int processingTimeRemaining;
+		
 		private int _coreNumber;						// private variable so the core can identify itself
 		private int _totalTime;							// total time elapsed on processes worked on by core
 		public int TotalTime{
@@ -44,14 +52,17 @@ namespace Sidimsp
 		//  run method.
 		public void DoWork() {
 			//Wait for the Processor to tell us that we are ready to process
-			while(true){
-				if(Processor.stopProcessing) break;
+			while(!Processor.stopProcessing){
 				
 				//Wait for the processor to tell us to do work
 				Processor.manualEvent.WaitOne();
 				
 				//Do Work
 				GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+				Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+				
+				//Return a process that needs to be worked on
+				//
 
 				//_processQueue.Run(Processor.systemTime);
 				Processor.SetFinished(_coreNumber);
