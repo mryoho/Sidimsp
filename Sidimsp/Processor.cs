@@ -38,6 +38,7 @@ namespace Sidimsp
 			_minIOBurstTimeRemaining = minIOBurstTimeRemaining;
 			_arrivalTimeRange = arrivalTimeRange;
 			_coreThreadList = new List<Thread>();
+			_generatedProcesses = new Queue<Process>();
 		}
 		
 		//This will store the number of CPU cycles
@@ -65,6 +66,7 @@ namespace Sidimsp
 		private List<int> _queueTypes;
 		private List<int> _quantums;
 		private List<Thread> _coreThreadList;
+		private Queue<Process> _generatedProcesses;
 		
 		public void StartSimulation() {
 			// generate core objects
@@ -74,7 +76,6 @@ namespace Sidimsp
 				_coreList.Add( newCore );
 			}
 			
-			int selectedCore = 0;
 			int cpuBurstTime;
 			int ioBurstTime;
 			int pid;
@@ -87,21 +88,19 @@ namespace Sidimsp
 			
 			//Generate processes
 			for(int i = 0; i <_numProcesses; i++) {
-				selectedCore = i % _numCores;		//Every time a process is generated, assign it to a different core
 				cpuBurstTime = random.Next( _minCpuBurstTimeRemaining, _maxCpuBurstTimeRemaining );
 				ioBurstTime = random.Next( _minIOBurstTimeRemaining, _maxIOBurstTimeRemaining );
 				pid = i;
 				priority = random.Next(0,9);
 				lastArrivalTime = arrivalTime;
-				arrivalTime = lastArrivalTime + random.Next(0, _arrivalTimeRange);
+				if ( i != 0 )	// make sure the first arrival time is at 0
+					arrivalTime = lastArrivalTime + random.Next(0, _arrivalTimeRange);
 				
 				p = new Process(pid, priority, arrivalTime, processState, cpuBurstTime, ioBurstTime);
 				
-				_coreList[selectedCore].ProcessQueue.AddProcess(p);
-				
-				//Add the total processingTimeRemaining from the newly added process.
-				_coreList[selectedCore].processingTimeRemaining += cpuBurstTime;
+				_generatedProcesses.Enqueue(p);		// add the process to the list of generated processes
 			}
+		
 			
 			// generate core threads
 			for(int i = 0; i < _numCores; i++){
@@ -117,8 +116,13 @@ namespace Sidimsp
 				}
 				
 				
+				
+				
 				//Increment the System time, and perform load balancing
-				while(systemTime < 4){ //While the cores have work to do, OR, more processes are to be created
+				while(systemTime < 50){ //While the cores have work to do, OR, more processes are to be created
+					
+					LoadNewlyArrivedProcesses();
+					
 					//Unblock all of the Core Threads, allowing them to execute
 					manualEvent2.Reset ();
 					manualEvent.Set ();
@@ -138,7 +142,7 @@ namespace Sidimsp
 					
 					//Check all of the cores, if all of them are complete, set stopProcessing to true;
 					stopProcessing = isFinishedProcessing();
-					if(systemTime == 3){
+					if(systemTime == 49){
 						stopProcessing = true;
 					}
 					
@@ -176,8 +180,19 @@ namespace Sidimsp
 			
 		}
 		
-		public void LoadBalance() {
+		// checks the processingTimeRemaining for all cores, returns the index of the core
+		// with the minimum.
+		public int checkLoadBalance() {
+			int minProcessingTimeRemaining = _coreList[0].processingTimeRemaining;
+			int coreIndex = 0;
+			for( int i = 1; i < _coreList.Count; i++){
+				if( _coreList[i].processingTimeRemaining < minProcessingTimeRemaining) {
+					minProcessingTimeRemaining = _coreList[i].processingTimeRemaining;
+					coreIndex = 0;
+				}
+			}
 			
+			return coreIndex;
 		}
 		
 		//This allows the cores to tell Processor that they are done processing
@@ -210,7 +225,22 @@ namespace Sidimsp
 			return isFinished;
 			
 		}
-		//
+		
+		// Checks the systemTime variable against the arrival times of the processes in
+		// the _generatedProcesses queue. If the arrival time == the system time, then add
+		// that process to the appropriate core using the checkLoadBalance() function.
+		public void LoadNewlyArrivedProcesses() {
+			Process p = _generatedProcesses.Peek();	// peek at first generated process to get it's arrival time
+			while ( p.ArrivalTime == systemTime ) {
+				int receivingCore = checkLoadBalance();
+				
+				_generatedProcesses.Dequeue();		// actually remove the process p from the head of the queue
+				_coreList[ receivingCore ].ProcessQueue.AddProcess( p );	// add process to appropriate core
+				
+				// Peek at next process to continue while loop or not
+				p = _generatedProcesses.Peek();
+			}
+		}
 		
 	}
 }
