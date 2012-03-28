@@ -45,25 +45,34 @@ namespace Sidimsp
 		public void DoWork() {
 			//Wait for the Processor to tell us that we are ready to process
 			while(true){
-				if(Processor.systemTime > 3) break;
+				if(Processor.stopProcessing) break;
 				
 				//Wait for the processor to tell us to do work
 				Processor.manualEvent.WaitOne();
 				
 				//Do Work
 				GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
-				Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+
 				//_processQueue.Run(Processor.systemTime);
 				Processor.SetFinished(_coreNumber);
 				
 				//Spin while we wait for the Processor to be reset
-				//THIS NEEDS TO BE IMPROVED, MAY NOT ALWAYS WORK
 				Processor.manualEvent2.WaitOne ();
 			}
 
 			Processor.SetFinished(_coreNumber);
 			
 		}
+		
+		public Boolean isFinishedProcessing(){
+			if(_processQueue.isFinishedProcessing()){
+				return true;	
+			}else{
+				return false;
+			}
+			
+		}
+		
 
 	}
 }

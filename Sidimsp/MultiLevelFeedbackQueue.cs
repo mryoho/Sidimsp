@@ -47,11 +47,25 @@ namespace Sidimsp
 			//For each of the queues, check if they are empty, if not, process on that process
 			for(int i = 0; i < _queues.Count; i++){
 				
-				
 			}
-		
-
 		}
+		
+		public Boolean isFinishedProcessing(){
+			
+			Boolean isFinished = true;
+			
+			//Check each of the Queues
+			for(int i = 0; i < _queues.Count; i++){
+				
+				//if any of the queues still have Processes, then we aren't done processing this MultiLevelFeedbackQueue
+				if(!_queues[i].isFinishedProcessing()){
+					isFinished = false;
+					break;
+				}
+			}
+			return isFinished;
+		}
+		
 		
 		// other methods
 		public void AddQueue(ProcessQueue pq){

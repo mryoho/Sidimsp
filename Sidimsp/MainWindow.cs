@@ -10,8 +10,6 @@ using Sidimsp;
 
 public partial class MainWindow : Gtk.Window
 {
-	//This will handle a separate thread for the GUI
-	BackgroundWorker bw = new BackgroundWorker();
 	
 	//This is checked by the running threads to determine whether to stop executing
 	static bool StopProcessing;
@@ -19,11 +17,10 @@ public partial class MainWindow : Gtk.Window
 	public MainWindow () : base(Gtk.WindowType.Toplevel)
 	{
 		Build ();
+		
 		//Set the console globally so that any class can output
 		GlobalVar.WindowConsole = console;
-		//Make it so that 
-		bw.WorkerSupportsCancellation = true;
-		bw.WorkerReportsProgress = true;
+		
 		Application.Init();
 		Application.Run();
 	}
@@ -51,22 +48,18 @@ public partial class MainWindow : Gtk.Window
 			//change the start button to a stop button
 			StartButton.Label = "Stop";
 			
-			//This starts the BackGroundWorker
-			//bw.RunWorkerAsync();
+			//Thist starts the simulation
 			startSimulation();
 		}else{
 			StopProcessing = true;
+			
+			//clear the text
 			console.Buffer.Clear ();
+			
 			//change the stop button to start
 			StartButton.Label = "Start";
 		}
 	}
-	
-	private void bw_DoWork(object sender, DoWorkEventArgs e)
-	        {
-	            startSimulation();
-	            e.Result = 1;
-	        }
 	
 	protected void startSimulation(){
 		

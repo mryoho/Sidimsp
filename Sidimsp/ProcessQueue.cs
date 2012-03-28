@@ -19,6 +19,15 @@ namespace Sidimsp
 			set{ this._processesQ = value; }
 		}
 		
+		public Boolean isFinishedProcessing(){
+			if(ProcessesQ.Count == 0){
+				Console.WriteLine("num processes is: " + ProcessesQ.Count.ToString());
+				return true;	
+			}else{
+				return false;
+			}
+		}
+		
 		public abstract void AddProcess(Process p);
 		public abstract void RemoveProcess(Process p);
 		public abstract int Run(); //This should return a Process.
