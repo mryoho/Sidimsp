@@ -73,6 +73,7 @@
     <Compile Include="Processor.cs" />
     <Compile Include="GlobalVar.cs" />
     <Compile Include="RunOnMainThread.cs" />
+    <Compile Include="Pair.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

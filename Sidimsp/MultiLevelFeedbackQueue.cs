@@ -36,18 +36,41 @@ namespace Sidimsp
 		}
 		
 		//Take in the current time
-		public void Run(int time) {
-			//GlobalVar.WindowConsole.Buffer.Text += ("MultiLevelFeedbackQueue Running " + Environment.NewLine);
-			//Gtk.Application.Invoke();
-			//Thread.Sleep(500);
+		public Boolean Run() {
+
 			Console.WriteLine("MultiLevelFeedbackQueue Running");
 			
 			Process returnedProcess = null;
 			
-			//For each of the queues, check if they are empty, if not, process on that process
-			for(int i = 0; i < _queues.Count; i++){
+			//Get the optimal process
+			returnedProcess = getProcess();
+			
+			//If the returned process is null, then we don't have any work to do.
+			if(returnedProcess != null){
 				
+				//set the status to "running"
+				returnedProcess.ProcessState = "Running";
+				
+				//increment the "timeWorkedOnQuantum" within the returned Process, this will keep track of how long this process has been worked on by the queue
+				
+				//decrement the "cpuBurstTimeRemaining," this keeps track of how much longer the process needs to be worked on
+				
+				//if the "timeWorkedOnQuantum" equals the queue's "timeQuantum" 
+					//then reset the "timeWorkedOnQuantum"
+					
+				
+				
+				
+				return true;
+			}else{
+				return false;	
 			}
+			
+		}
+		
+		public Process getProcess(){
+			Process returnedProcess = null;
+			return returnedProcess;
 		}
 		
 		public Boolean isFinishedProcessing(){

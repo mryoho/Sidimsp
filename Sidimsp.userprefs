@@ -1,16 +1,15 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Sidimsp/Processor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Sidimsp/MultiLevelFeedbackQueue.cs">
     <Files>
       <File FileName="Sidimsp/RoundRobinQueue.cs" Line="19" Column="4" />
-      <File FileName="Sidimsp/Process.cs" Line="1" Column="1" />
-      <File FileName="Sidimsp/MultiLevelFeedbackQueue.cs" Line="1" Column="1" />
-      <File FileName="Sidimsp/Core.cs" Line="65" Column="7" />
-      <File FileName="Sidimsp/Processor.cs" Line="132" Column="6" />
+      <File FileName="Sidimsp/MultiLevelFeedbackQueue.cs" Line="55" Column="5" />
+      <File FileName="Sidimsp/Core.cs" Line="68" Column="27" />
       <File FileName="Sidimsp/MainWindow.cs" Line="1" Column="1" />
       <File FileName="Sidimsp/GlobalVar.cs" Line="1" Column="1" />
-      <File FileName="Sidimsp/ProcessQueue.cs" Line="1" Column="1" />
+      <File FileName="Sidimsp/ProcessQueue.cs" Line="35" Column="9" />
       <File FileName="Sidimsp/FirstComeFirstServedQueue.cs" Line="1" Column="1" />
+      <File FileName="Sidimsp/Process.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

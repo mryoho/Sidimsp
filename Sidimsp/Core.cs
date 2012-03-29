@@ -51,24 +51,27 @@ namespace Sidimsp
 		// Note!! The logic for moving through processes DOES NOT GO HERE...it goes in the MultiLevelFeedbackQueue class's
 		//  run method.
 		public void DoWork() {
-			//Wait for the Processor to tell us that we are ready to process
+			//Continue to do work while the Processor desires
 			while(!Processor.stopProcessing){
 				
 				//Wait for the processor to tell us to do work
 				Processor.manualEvent.WaitOne();
 				
-				//Do Work
-				GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
-				Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+				//Do Work ****HERE****
+					//GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+					Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
 				
-				//Return a process that needs to be worked on
-				//
-
-				//_processQueue.Run(Processor.systemTime);
+					//If we successfully performed work on a process, then decrement this Core's "processingTimeRemaining"
+					if(_processQueue.Run ()){
+						processingTimeRemaining--;
+					}
+				//Do Work ****HERE****
+				
+				//Tell the processor that this core is finished processing
 				Processor.SetFinished(_coreNumber);
 				
-				//Spin while we wait for the Processor to be reset
-				Processor.manualEvent2.WaitOne ();
+				//Wait for the Processor to be finished working on all of the cores
+				Processor.manualEvent2.WaitOne();
 			}
 
 			Processor.SetFinished(_coreNumber);
