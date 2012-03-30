@@ -51,14 +51,17 @@ namespace Sidimsp
 		//  run method.
 		public void DoWork() {
 			//Continue to do work while the Processor desires
-			while(!Processor.stopProcessing){
+			while(true){
 				
 				//Wait for the processor to tell us to do work
 				Processor.manualEvent.WaitOne();
 				
+				if(Processor.stopProcessing){
+					break;	
+				}
+				
 				//Do Work ****HERE****
 					//GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
-					GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
 				
 					//If we successfully performed work on a process, then decrement this Core's "processingTimeRemaining"
 					//This is assuming that there is not cost associated with context switches

@@ -121,13 +121,23 @@ namespace Sidimsp
 				}
 				
 				//Increment the System time, and perform load balancing
-				while(true){ //While the cores have work to do, OR, more processes are to be created
+				while(!stopProcessing){ //While the cores have work to do, OR, more processes are to be created
 					
 					LoadNewlyArrivedProcesses();
+					
+					//Check all of the cores, if all of them are complete, set stopProcessing to true;
+					//stopProcessing = isFinishedProcessing();
+					if(isFinishedProcessing() && (_generatedProcesses.Count == 0)){
+						stopProcessing = true;
+					}
 					
 					//Unblock all of the Core Threads, allowing them to execute
 					manualEvent2.Reset ();
 					manualEvent.Set ();
+					
+					if(stopProcessing){
+						break;	
+					}
 					
 					//Wait for all of the Core Threads to execute(Number of handles cannot be greater than 64!)
 					WaitHandle.WaitAll(autoEvents);
@@ -143,13 +153,6 @@ namespace Sidimsp
 						
 					//Increment the systemTime variable
 					systemTime++;
-					
-					//Check all of the cores, if all of them are complete, set stopProcessing to true;
-					//stopProcessing = isFinishedProcessing();
-					if(isFinishedProcessing() && (_generatedProcesses.Count == 0)){
-						stopProcessing = true;
-						break;
-					}
 					
 					//Reset the status of all of the Cores
 					SetUnFinished(); 			
@@ -254,6 +257,7 @@ namespace Sidimsp
 		public static void AddFinishedProcess(Process finishedProcess){
 			lock(_locker){
 				finishedProcess.CompletionTime = Processor.systemTime;
+				GlobalVar.OutputMessage("PID: " + finishedProcess.PID.ToString() + " finished at "+ finishedProcess.CompletionTime.ToString());
 				_finishedProcesses.Add(finishedProcess);
 			}
 		}

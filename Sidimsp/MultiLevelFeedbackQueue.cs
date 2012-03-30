@@ -38,7 +38,7 @@ namespace Sidimsp
 		//Do work on a process, if work is done successfully, return true.
 		public Boolean Run() {
 
-			Console.WriteLine("MultiLevelFeedbackQueue Running");
+			//Console.WriteLine("MultiLevelFeedbackQueue Running");
 			
 			//The first part of the pair is the process, the second is the index of the queue it came from with regards to the "_queues"
 			//Get the optimal process from one of the queues
