@@ -8,8 +8,10 @@ namespace Sidimsp
 		
 		public ProcessQueue ()
 		{
-			
+			_processesQ = new List<Process>();
 		}
+		
+		
 		
 		protected int _timeQuantum; //Indicates time remaining before switching to a different process	
 		public int timeQuantum{
@@ -17,10 +19,16 @@ namespace Sidimsp
 			private set{this._timeQuantum = value;}
 		}
 		
-		public abstract Boolean isFinishedProcessing();
-		public abstract int getCount();
+		protected List<Process> _processesQ; //Used to store the processes
+		public List<Process> ProcessesQ{
+			get{ return this._processesQ; }
+			set{ this._processesQ = value; }
+		}
+		
 		public abstract Process getProcess();
-		public abstract void AddProcess(Process p);
+		public void AddProcess(Process p){
+			_processesQ.Add(p);
+		}
 		public abstract void RemoveProcess(Process p);
 		public abstract int Run(); //This should return a Process.
 									//If completed, put into a completed Processes List (which should be global and locked)

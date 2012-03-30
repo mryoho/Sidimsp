@@ -7,46 +7,54 @@ namespace Sidimsp
 	{
 		public FirstComeFirstServedQueue (int timeQuantum)
 		{
-			_processesQ = new Queue<Process>();
 			this._timeQuantum = timeQuantum;
 		}
 		
-		private Queue<Process> _processesQ; //Used to store the processes
-		public Queue<Process> ProcessesQ{
-			get{ return this._processesQ; }
-			set{ this._processesQ = value; }
-		}
-		
-		public override Boolean isFinishedProcessing(){
-			if(ProcessesQ.Count == 0){
-				Console.WriteLine("num processes is: " + ProcessesQ.Count.ToString());
-				return true;	
-			}else{
-				Console.WriteLine ("num processes is " + ProcessesQ.Count.ToString());
-				return false;
-			}	
-		}
-		
-		public override int getCount(){
-			return _processesQ.Count;	
-		}
-		
 		// inherited methods
-		public override void AddProcess (Process p)
-		{
-			//if the process is running
-			_processesQ.Enqueue( p );
-		}
 		
 		public override void RemoveProcess (Process p)
 		{
 			throw new NotImplementedException ();
 		}
 		
+		private static int SortByArrivalTime(Process x, Process y)
+   	 	{	
+			if(x.ArrivalTime > y.ArrivalTime){
+				return 1;
+			}else if(x.ArrivalTime == y.ArrivalTime){
+				return 0;
+			}else{
+				return -1;
+			}
+		}
+		
 		//Return the process at the top of the queue
 		public override Process getProcess ()
 		{
-			 return _processesQ.Peek();
+			Process returnedProcess = null;
+			Boolean runningProcessFound = false;
+			
+			//Search the list for a process that is already running
+			for(int i = 0; i < _processesQ.Count; i++){
+				if(_processesQ[i].ProcessState == "Running"){
+					returnedProcess = _processesQ[i];
+					_processesQ.RemoveAt(i);
+					runningProcessFound = true;
+					break;
+				}
+			}
+			
+			//If we can't find one that is already running, then choose one with the lowest arrival time
+			if(!runningProcessFound){
+				
+				//Sort the Processes by arrival time
+				_processesQ.Sort(SortByArrivalTime);
+				
+				returnedProcess = _processesQ[0];
+				_processesQ.RemoveAt(0);
+			}
+			
+			return returnedProcess;
 		}
 		
 		public override int Run() {

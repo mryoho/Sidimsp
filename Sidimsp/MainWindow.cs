@@ -88,7 +88,9 @@ public partial class MainWindow : Gtk.Window
 			quantums.Add(8);
 			quantums.Add(16);
 			quantums.Add(0);
-			Processor processor = new Processor(nCores, nProcesses, 50, 0, 50, 0, 9, queues, quantums);
+			
+			//CHANGE 1 back to 9
+			Processor processor = new Processor(nCores, nProcesses, 50, 0, 50, 0, 1, queues, quantums);
 			processor.StartSimulation();	
 		}
 		

@@ -10,46 +10,53 @@ namespace Sidimsp
 		{
 			this._timeQuantum = timeQuantum;
 			this._RRquantum = RRQuantum;
-			_processesQ = new Queue<Process>();
 		}
 		
 		private int _RRquantum;
 		
-		private Queue<Process> _processesQ; //Used to store the processes
-		public Queue<Process> ProcessesQ{
-			get{ return this._processesQ; }
-			set{ this._processesQ = value; }
-		}
-		
-		public override Boolean isFinishedProcessing(){
-			if(ProcessesQ.Count == 0){
-				Console.WriteLine("num processes is: " + ProcessesQ.Count.ToString());
-				return true;	
-			}else{
-				Console.WriteLine ("num processes is " + ProcessesQ.Count.ToString());
-				return false;
-			}	
-		}
-		
-		public override int getCount(){
-			return _processesQ.Count;	
-		}
-		
 		// Methods
-		public override void AddProcess(Process p) {
-			_processesQ.Enqueue( p );
-		}
 		
 		public override void RemoveProcess(Process p) {
 		}
 		
+		private static int SortByTimeWorkedOnQuantum(Process x, Process y)
+   	 	{	
+			if(x.timeWorkedOnQuantum > y.timeWorkedOnQuantum){
+				return 1;
+			}else if(x.timeWorkedOnQuantum == y.timeWorkedOnQuantum){
+				return 0;
+			}else{
+				return -1;
+			}
+		}
+		
 		public override Process getProcess ()
 		{
-			//
-			
-			
-			
 			Process returnedProcess = null;
+			Boolean runningProcessFound = false;
+			
+			//Sort the processes by their timeWorkedOnQuantum
+			_processesQ.Sort(SortByTimeWorkedOnQuantum);
+			
+			for(int i = 0; i < _processesQ.Count; i++){
+				//Look for a process that still has work to be done on it
+				if(_processesQ[i].timeWorkedOnQuantum % _RRquantum != 0){
+					returnedProcess = _processesQ[i];
+					_processesQ.RemoveAt(i);
+					runningProcessFound = true;
+					break;	
+				}
+			}
+			
+			//If we can't find one that is already running, then choose one with the lowest timeWorkedOnQuantum
+			if(!runningProcessFound){
+				//Sort the Processes by timeWorkedOnQuantum
+				//ALREADY SORTED FROM EARLIER
+				
+				returnedProcess = _processesQ[0];
+				_processesQ.RemoveAt(0);
+			}
+			
 			 return returnedProcess;
 		}
 		

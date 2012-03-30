@@ -56,20 +56,12 @@ namespace Sidimsp
 				//decrement the "cpuBurstTimeRemaining," this keeps track of how much longer the process needs to be worked on
 				returnedProcess.First.CpuBurstTimeRemaining--;
 				
-				//if the "timeWorkedOnQuantum" equals the queue's "timeQuantum" then this Process must advance to the next queue
-				if(returnedProcess.First.timeWorkedOnQuantum == _queues[returnedProcess.Second].timeQuantum){
 				
-					//add a message to the GlobalVar message queue
-					
-					//then reset the "timeWorkedOnQuantum"
-					returnedProcess.First.timeWorkedOnQuantum = 0;
-					
-					//then set the status to "waiting"
-					returnedProcess.First.ProcessState = "Waiting";
-					
-					//if the process requires more work
-					if(returnedProcess.First.CpuBurstTimeRemaining > 0){
-					
+				if(returnedProcess.First.CpuBurstTimeRemaining > 0){
+					if(returnedProcess.First.timeWorkedOnQuantum == _queues[returnedProcess.Second].timeQuantum){
+						
+						returnedProcess.First.timeWorkedOnQuantum = 0;
+						
 						//check if the there is another queue beneath the current one
 						if(_queues.Count > (returnedProcess.Second +1)){
 							//then, add the process to that queue
@@ -79,16 +71,18 @@ namespace Sidimsp
 							_queues[returnedProcess.Second].AddProcess(returnedProcess.First);
 						}
 						
-					//if the "cpuBurstTimeRemaining" is zero	
 					}else{
+					_queues[returnedProcess.Second].AddProcess(returnedProcess.First);
+					}
+					
+				}else{
 						//set the status to "Finished"
 						returnedProcess.First.ProcessState = "Finished";
 						
 						//then add the Process to the Processor's completedProcesses ArrayList
-						Processor.AddFinishedProcess(returnedProcess.First);
-					}
-				
+						Processor.AddFinishedProcess(returnedProcess.First);	
 				}
+				
 				return true;
 			}else{
 				return false;	
@@ -102,11 +96,8 @@ namespace Sidimsp
 			for(int i = 0; i < _queues.Count; i++){
 				
 				//if we find a queue with processes to be worked on, grab the process
-				if(_queues[i].getCount() > 0){
-					//grab the Process from a queue with Processes
+				 if(_queues[i].ProcessesQ.Count > 0){
 					returnedProcess.First = _queues[i].getProcess();
-					
-					//remember what queue we retrieved this Process from
 					returnedProcess.Second = i;
 					break;
 				}
@@ -125,7 +116,7 @@ namespace Sidimsp
 			for(int i = 0; i < _queues.Count; i++){
 				
 				//if any of the queues still have Processes, then we aren't done processing this MultiLevelFeedbackQueue
-				if(!_queues[i].isFinishedProcessing()){
+				if(_queues[i].ProcessesQ.Count > 0){
 					isFinished = false;
 					break;
 				}

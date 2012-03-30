@@ -121,16 +121,16 @@ namespace Sidimsp
 				}
 				
 				//Increment the System time, and perform load balancing
-				while(systemTime < 1000){ //While the cores have work to do, OR, more processes are to be created
+				while(true){ //While the cores have work to do, OR, more processes are to be created
 					
-					//LoadNewlyArrivedProcesses();
+					LoadNewlyArrivedProcesses();
 					
 					//Unblock all of the Core Threads, allowing them to execute
 					manualEvent2.Reset ();
 					manualEvent.Set ();
 					
 					//Wait for all of the Core Threads to execute(Number of handles cannot be greater than 64!)
-					WaitHandle.WaitAll (autoEvents);
+					WaitHandle.WaitAll(autoEvents);
 					
 					//Block all of the Core Threads, preventing them from executing
 					manualEvent.Reset ();
@@ -146,8 +146,9 @@ namespace Sidimsp
 					
 					//Check all of the cores, if all of them are complete, set stopProcessing to true;
 					//stopProcessing = isFinishedProcessing();
-					if(systemTime == 999){
+					if(isFinishedProcessing() && (_generatedProcesses.Count == 0)){
 						stopProcessing = true;
+						break;
 					}
 					
 					//Reset the status of all of the Cores
@@ -232,21 +233,27 @@ namespace Sidimsp
 		// the _generatedProcesses queue. If the arrival time == the system time, then add
 		// that process to the appropriate core using the checkLoadBalance() function.
 		public void LoadNewlyArrivedProcesses() {
+			
+			if(_generatedProcesses.Count > 0){
 			Process p = _generatedProcesses.Peek();	// peek at first generated process to get it's arrival time
-			while ( p.ArrivalTime == systemTime ) {
+			while ( p.ArrivalTime == systemTime  && _generatedProcesses.Count > 0) {
 				int receivingCore = checkLoadBalance();
 				 
 				_generatedProcesses.Dequeue();		// actually remove the process p from the head of the queue
-				_coreList[ receivingCore ].ProcessQueue.AddProcess( p );	// add process to appropriate core
+				_coreList[receivingCore].ProcessQueue.AddProcess( p );	// add process to appropriate core
 				
 				// Peek at next process to continue while loop or not
-				p = _generatedProcesses.Peek();
+					if(_generatedProcesses.Count > 0){
+						p = _generatedProcesses.Peek();
+					}
+			}
 			}
 		}
 		
 		//Add the finished process to the _finishedProcesses queue
 		public static void AddFinishedProcess(Process finishedProcess){
 			lock(_locker){
+				finishedProcess.CompletionTime = Processor.systemTime;
 				_finishedProcesses.Add(finishedProcess);
 			}
 		}

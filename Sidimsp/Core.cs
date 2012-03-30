@@ -63,9 +63,9 @@ namespace Sidimsp
 					//If we successfully performed work on a process, then decrement this Core's "processingTimeRemaining"
 					//This is assuming that there is not cost associated with context switches
 				
-					//if(_processQueue.Run ()){
-					//	processingTimeRemaining--;
-					//}
+					if(_processQueue.Run ()){
+						processingTimeRemaining--;
+					}
 				//Do Work ****HERE****
 				
 				//Tell the processor that this core is finished processing
