@@ -180,11 +180,57 @@ namespace Sidimsp
 			Environment.ExitCode = result;
 			
 			//Notify user that processing is complete
-			GlobalVar.OutputMessage("Processor Finished" + Environment.NewLine);
+			GlobalVar.OutputMessage("****Processor Finished****" + Environment.NewLine);
 			
 			//Display the turnaround time, response time, wait time 
 			
+			throughputTime = _finishedProcesses[ _finishedProcesses.Count - 1 ].CompletionTime / 
+				_finishedProcesses.Count;
+			GlobalVar.OutputMessage("Throughput Time is " + throughputTime.ToString() + " clock cycles.");
+			
+			turnaroundTime = 0;
+			for(int i = 0; i < _finishedProcesses.Count; i++){
+				turnaroundTime += (_finishedProcesses[i].CompletionTime - _finishedProcesses[i].ArrivalTime);	
+			}
+			turnaroundTime /= _finishedProcesses.Count;
+			GlobalVar.OutputMessage("Turnaround Time is " + turnaroundTime.ToString() + " clock cycles.");
+			
+			waitTime = 0;
+			for(int i = 0; i < _finishedProcesses.Count; i++){
+				waitTime += (_finishedProcesses[i].CompletionTime-_finishedProcesses[i].ArrivalTime 
+					- _finishedProcesses[i].CpuBurstTime - _finishedProcesses[i].totalContextSwitchCosts);	
+			}
+			waitTime /= _finishedProcesses.Count;
+			GlobalVar.OutputMessage("Wait Time is " + waitTime.ToString() + " clock cycles.");
+			
+			responseTime = 0;
+			for(int i = 0; i < _finishedProcesses.Count; i++){
+				responseTime += (_finishedProcesses[i].responseTime);	
+			}
+			responseTime /= _finishedProcesses.Count;
+			GlobalVar.OutputMessage("Response Time is " + responseTime.ToString() + " clock cycles.");
+			
+			contextSwitchTime = 0;
+			for(int i = 0; i < _finishedProcesses.Count; i++){
+				contextSwitchTime += (_finishedProcesses[i].totalContextSwitchCosts);	
+			}
+			contextSwitchTime /= _finishedProcesses.Count;
+			GlobalVar.OutputMessage("Context Switch Time is " + contextSwitchTime.ToString() + " clock cycles.");
+			
+			
+			GlobalVar.PrintMessages();
+			
+			
+			
+			
+			
 		}
+		
+		int responseTime;
+		int turnaroundTime;
+		int waitTime;
+		int throughputTime;
+		int contextSwitchTime;
 		
 		// checks the processingTimeRemaining for all cores, returns the index of the core
 		// with the minimum.

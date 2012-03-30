@@ -15,6 +15,8 @@ namespace Sidimsp
 			this.timeWorkedOnQuantum = 0;
 			this.totalContextSwitchCosts = 0;
 			this.CompletionTime = 0;
+			this.responseTime = -1;
+			this._cpuBurstTime = CpuBurstTimeRemaining;
 		}
 	
 	~Process(){}
@@ -73,7 +75,20 @@ namespace Sidimsp
 	public int totalContextSwitchCosts{
 			get{return this._totalContextSwitchCosts;}
 			set{this._totalContextSwitchCosts = value;}
-		}	
+		}
+		
+	public int _responseTime;	
+	public int responseTime{
+			get{return this._responseTime;}
+			set{this._responseTime = value;}
+		}
+		
+	public int _cpuBurstTime;	
+	public int CpuBurstTime{
+			get{return this._cpuBurstTime;}
+			set{this._cpuBurstTime = value;}
+		}
+		
 			
 	}
 }

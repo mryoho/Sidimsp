@@ -50,6 +50,11 @@ namespace Sidimsp
 			//If the returned process is null, then we don't have any work to do.
 			if(returnedProcess.First != null){
 				
+				if(returnedProcess.First.responseTime < 0){
+					returnedProcess.First.responseTime = Processor.systemTime;	
+				}
+					
+				
 				//set the status to "Running"
 				returnedProcess.First.ProcessState = "Running";
 				
@@ -62,6 +67,9 @@ namespace Sidimsp
 				
 				if(returnedProcess.First.CpuBurstTimeRemaining > 0){
 					if(returnedProcess.First.timeWorkedOnQuantum == _queues[returnedProcess.Second].timeQuantum){
+						
+						//Perform IO Burst
+						returnedProcess.First.IOBurstTimeRemaining -= returnedProcess.First.IOBurstTimeRemaining / returnedProcess.First.CpuBurstTimeRemaining;
 						
 						returnedProcess.First.timeWorkedOnQuantum = 0;
 						
