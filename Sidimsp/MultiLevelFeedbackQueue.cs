@@ -9,26 +9,29 @@ namespace Sidimsp
 	{
 		private List<ProcessQueue> _queues{ get; set;}
 		
-		public MultiLevelFeedbackQueue ( List<int> queueTypes, List<int> quantums)
+		public MultiLevelFeedbackQueue ( List<int> queueTypes, List<int> quantums, int coreNumber)
 		{
 			//Stores each of the queues (PriorityQueue, RoundRobinQueue, FCFSQueue)
 			_queues = new List<ProcessQueue>();
+			_coreNumber = coreNumber;
 			
 			// Create the multilevelfeedbackqueue based on the number of queue types provided
 			for( int i = 0; i < queueTypes.Count; i++ ){
 				switch( queueTypes[i] ) {
 				case 0:
-					_queues.Add (new PriorityQueue(quantums[i]));
+					_queues.Add (new FirstComeFirstServedQueue(quantums[i]));
 					break;
 				case 1:
-					_queues.Add (new RoundRobinQueue(quantums[i], 2));
+					_queues.Add (new PriorityQueue(quantums[i]));
 					break;
 				case 2:
-					_queues.Add (new FirstComeFirstServedQueue(quantums[i]));
+					_queues.Add (new RoundRobinQueue(quantums[i], 2));
 					break;
 				}
 			}
 		}
+		
+		private int _coreNumber;
 		
 		// inherited methods
 		public void AddProcess(Process p){
@@ -79,6 +82,9 @@ namespace Sidimsp
 						//set the status to "Finished"
 						returnedProcess.First.ProcessState = "Finished";
 						
+						returnedProcess.First.CompletionTime = Processor.systemTime;
+						GlobalVar.OutputMessage("PID: " + returnedProcess.First.PID.ToString() + " finished at "+ returnedProcess.First.CompletionTime.ToString() + " in core: " + _coreNumber);
+					
 						//then add the Process to the Processor's completedProcesses ArrayList
 						Processor.AddFinishedProcess(returnedProcess.First);	
 				}
@@ -128,6 +134,20 @@ namespace Sidimsp
 		// other methods
 		public void AddQueue(ProcessQueue pq){
 			//_queues.Add(pq);
+		}
+		
+		public int totalProcessingTimeRemaining(){
+			
+			int totalProcessingTime = 0;
+			
+			for(int i = 0; i < _queues.Count; i++){
+				for(int k = 0; k < _queues[i].ProcessesQ.Count; k++){
+					totalProcessingTime += _queues[i].ProcessesQ[k].CpuBurstTimeRemaining;
+				}		
+			}
+			
+			//GlobalVar.OutputMessage("Total processing time left is: " + totalProcessingTime.ToString());
+			return totalProcessingTime;
 		}
 	}
 }

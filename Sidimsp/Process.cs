@@ -13,6 +13,7 @@ namespace Sidimsp
 			this.CpuBurstTimeRemaining = CpuBurstTimeRemaining;
 			this.IOBurstTimeRemaining = IOBurstTimeRemaining;
 			this.timeWorkedOnQuantum = 0;
+			this.totalContextSwitchCosts = 0;
 			this.CompletionTime = 0;
 		}
 	
@@ -67,6 +68,12 @@ namespace Sidimsp
 			get{return this._timeWorkedOnQuantum;}
 			set{this._timeWorkedOnQuantum = value;}
 		}
+		
+	public int _totalContextSwitchCosts;	
+	public int totalContextSwitchCosts{
+			get{return this._totalContextSwitchCosts;}
+			set{this._totalContextSwitchCosts = value;}
+		}	
 			
 	}
 }

@@ -189,12 +189,14 @@ namespace Sidimsp
 		// checks the processingTimeRemaining for all cores, returns the index of the core
 		// with the minimum.
 		public int checkLoadBalance() {
-			int minProcessingTimeRemaining = _coreList[0].processingTimeRemaining;
+			int minProcessingTimeRemaining = _coreList[0].totalProcessingTimeRemaining();
+			int tempCompare = minProcessingTimeRemaining;
 			int coreIndex = 0;
 			for( int i = 1; i < _coreList.Count; i++){
-				if( _coreList[i].processingTimeRemaining < minProcessingTimeRemaining) {
-					minProcessingTimeRemaining = _coreList[i].processingTimeRemaining;
-					coreIndex = 0;
+				tempCompare = _coreList[i].totalProcessingTimeRemaining();
+				if( tempCompare < minProcessingTimeRemaining) {
+					minProcessingTimeRemaining = tempCompare;
+					coreIndex = i;
 				}
 			}
 			
@@ -246,9 +248,9 @@ namespace Sidimsp
 				_coreList[receivingCore].ProcessQueue.AddProcess( p );	// add process to appropriate core
 				
 				// Peek at next process to continue while loop or not
-					if(_generatedProcesses.Count > 0){
-						p = _generatedProcesses.Peek();
-					}
+				if(_generatedProcesses.Count > 0){
+					p = _generatedProcesses.Peek();
+				}
 			}
 			}
 		}
@@ -256,8 +258,6 @@ namespace Sidimsp
 		//Add the finished process to the _finishedProcesses queue
 		public static void AddFinishedProcess(Process finishedProcess){
 			lock(_locker){
-				finishedProcess.CompletionTime = Processor.systemTime;
-				GlobalVar.OutputMessage("PID: " + finishedProcess.PID.ToString() + " finished at "+ finishedProcess.CompletionTime.ToString());
 				_finishedProcesses.Add(finishedProcess);
 			}
 		}

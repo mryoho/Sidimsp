@@ -16,7 +16,7 @@ namespace Sidimsp
 		public Core (int coreNumber, List<int> queueTypes, List<int> quantums)
 		{
 			processingTimeRemaining = 0;
-			_processQueue = new MultiLevelFeedbackQueue( queueTypes, quantums );
+			_processQueue = new MultiLevelFeedbackQueue( queueTypes, quantums, coreNumber );
 			_coreNumber = coreNumber;
 			
 		}
@@ -91,7 +91,9 @@ namespace Sidimsp
 			
 		}
 		
-
+		public int totalProcessingTimeRemaining(){
+			return ProcessQueue.totalProcessingTimeRemaining();
+		}
 	}
-}
 
+}

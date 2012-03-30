@@ -52,6 +52,12 @@ namespace Sidimsp
 				
 				returnedProcess = _processesQ[0];
 				_processesQ.RemoveAt(0);
+				
+				if(returnedProcess.CpuBurstTimeRemaining > 0){
+					//Add in costs for context switches, here we are switching to a task that wasn't "Running"
+					returnedProcess.totalContextSwitchCosts++;
+					returnedProcess.CpuBurstTimeRemaining++;
+				}
 			}
 			
 			return returnedProcess;
