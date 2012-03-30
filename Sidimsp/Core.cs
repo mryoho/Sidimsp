@@ -27,7 +27,6 @@ namespace Sidimsp
 			set{this._processQueue = value;}
 		}
 		
-		
 		//This stores the total amount of processingTimeRemaining
 		//Increase when adding a process to this core
 		//Decrement when doing work on the processes
@@ -59,12 +58,14 @@ namespace Sidimsp
 				
 				//Do Work ****HERE****
 					//GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
-					Console.WriteLine ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
+					GlobalVar.OutputMessage ("we are in core" + this._coreNumber + " and systemTime is: " + Processor.systemTime);
 				
 					//If we successfully performed work on a process, then decrement this Core's "processingTimeRemaining"
-					if(_processQueue.Run ()){
-						processingTimeRemaining--;
-					}
+					//This is assuming that there is not cost associated with context switches
+				
+					//if(_processQueue.Run ()){
+					//	processingTimeRemaining--;
+					//}
 				//Do Work ****HERE****
 				
 				//Tell the processor that this core is finished processing

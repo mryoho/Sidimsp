@@ -19,7 +19,11 @@ namespace Sidimsp
 		
 		public static void OutputMessage( string text ){
 			lock(_locker){
+				//save the text message, to be displayed later
 				theMessages.Add(text);
+				
+				//display the text message in the console
+				Console.WriteLine (text);
 			}
 		}
 		

@@ -8,27 +8,18 @@ namespace Sidimsp
 		
 		public ProcessQueue ()
 		{
-			_processesQ = new Queue<Process>();
+			
 		}
 		
-		protected int _timeQuantum; //Use this instead of a pair, indicates time remaining before switching to a different process
-		
-		protected Queue<Process> _processesQ; //Used to store the processes
-		public Queue< Process > ProcessesQ{
-			get{ return this._processesQ; }
-			set{ this._processesQ = value; }
+		protected int _timeQuantum; //Indicates time remaining before switching to a different process	
+		public int timeQuantum{
+			get{return this._timeQuantum;}
+			private set{this._timeQuantum = value;}
 		}
 		
-		public Boolean isFinishedProcessing(){
-			if(ProcessesQ.Count == 0){
-				Console.WriteLine("num processes is: " + ProcessesQ.Count.ToString());
-				return true;	
-			}else{
-				Console.WriteLine ("num processes is " + ProcessesQ.Count.ToString());
-				return false;
-			}
-		}
-		
+		public abstract Boolean isFinishedProcessing();
+		public abstract int getCount();
+		public abstract Process getProcess();
 		public abstract void AddProcess(Process p);
 		public abstract void RemoveProcess(Process p);
 		public abstract int Run(); //This should return a Process.

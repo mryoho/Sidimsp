@@ -12,6 +12,8 @@ namespace Sidimsp
 			this.ProcessState = ProcessState;
 			this.CpuBurstTimeRemaining = CpuBurstTimeRemaining;
 			this.IOBurstTimeRemaining = IOBurstTimeRemaining;
+			this.timeWorkedOnQuantum = 0;
+			this.CompletionTime = 0;
 		}
 	
 	~Process(){}
@@ -33,6 +35,13 @@ namespace Sidimsp
 			get{return this._ArrivalTime;}
 			private set {this._ArrivalTime = value;}
 		}
+		
+	private int _CompletionTime;
+	public int CompletionTime{
+			get{return this._CompletionTime;}
+			set {this._CompletionTime = value;}
+		}
+		
 	
 	private string _ProcessState;
 	public string ProcessState{
@@ -51,6 +60,12 @@ namespace Sidimsp
 	public int IOBurstTimeRemaining{
 			get{return this._IOBurstTimeRemaining;}
 			set{this._IOBurstTimeRemaining = value;}
+		}
+		
+	private int _timeWorkedOnQuantum;	
+	public int timeWorkedOnQuantum{
+			get{return this._timeWorkedOnQuantum;}
+			set{this._timeWorkedOnQuantum = value;}
 		}
 			
 	}

@@ -35,41 +35,85 @@ namespace Sidimsp
 			_queues[0].AddProcess(p);
 		}
 		
-		//Take in the current time
+		//Do work on a process, if work is done successfully, return true.
 		public Boolean Run() {
 
 			Console.WriteLine("MultiLevelFeedbackQueue Running");
 			
-			Process returnedProcess = null;
-			
-			//Get the optimal process
-			returnedProcess = getProcess();
+			//The first part of the pair is the process, the second is the index of the queue it came from with regards to the "_queues"
+			//Get the optimal process from one of the queues
+			Pair<Process,int> returnedProcess = getProcess ();
 			
 			//If the returned process is null, then we don't have any work to do.
-			if(returnedProcess != null){
+			if(returnedProcess.First != null){
 				
-				//set the status to "running"
-				returnedProcess.ProcessState = "Running";
+				//set the status to "Running"
+				returnedProcess.First.ProcessState = "Running";
 				
 				//increment the "timeWorkedOnQuantum" within the returned Process, this will keep track of how long this process has been worked on by the queue
+				returnedProcess.First.timeWorkedOnQuantum++;
 				
 				//decrement the "cpuBurstTimeRemaining," this keeps track of how much longer the process needs to be worked on
+				returnedProcess.First.CpuBurstTimeRemaining--;
 				
-				//if the "timeWorkedOnQuantum" equals the queue's "timeQuantum" 
-					//then reset the "timeWorkedOnQuantum"
+				//if the "timeWorkedOnQuantum" equals the queue's "timeQuantum" then this Process must advance to the next queue
+				if(returnedProcess.First.timeWorkedOnQuantum == _queues[returnedProcess.Second].timeQuantum){
+				
+					//add a message to the GlobalVar message queue
 					
+					//then reset the "timeWorkedOnQuantum"
+					returnedProcess.First.timeWorkedOnQuantum = 0;
+					
+					//then set the status to "waiting"
+					returnedProcess.First.ProcessState = "Waiting";
+					
+					//if the process requires more work
+					if(returnedProcess.First.CpuBurstTimeRemaining > 0){
+					
+						//check if the there is another queue beneath the current one
+						if(_queues.Count > (returnedProcess.Second +1)){
+							//then, add the process to that queue
+							_queues[returnedProcess.Second+1].AddProcess(returnedProcess.First);
+						}else{
+							//else, add to the same queue, defined in the pair
+							_queues[returnedProcess.Second].AddProcess(returnedProcess.First);
+						}
+						
+					//if the "cpuBurstTimeRemaining" is zero	
+					}else{
+						//set the status to "Finished"
+						returnedProcess.First.ProcessState = "Finished";
+						
+						//then add the Process to the Processor's completedProcesses ArrayList
+						Processor.AddFinishedProcess(returnedProcess.First);
+					}
 				
-				
-				
+				}
 				return true;
 			}else{
 				return false;	
 			}
-			
 		}
 		
-		public Process getProcess(){
-			Process returnedProcess = null;
+		public Pair<Process,int> getProcess(){
+			Pair<Process,int> returnedProcess = new Pair<Process, int>(null,0);
+			
+			//Continue to search for a queue that has processes requiring more work
+			for(int i = 0; i < _queues.Count; i++){
+				
+				//if we find a queue with processes to be worked on, grab the process
+				if(_queues[i].getCount() > 0){
+					//grab the Process from a queue with Processes
+					returnedProcess.First = _queues[i].getProcess();
+					
+					//remember what queue we retrieved this Process from
+					returnedProcess.Second = i;
+					break;
+				}
+				
+			}
+			
+			//if no process is found, the returnedProcess.First will be null
 			return returnedProcess;
 		}
 		
