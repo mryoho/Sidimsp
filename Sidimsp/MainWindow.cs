@@ -128,7 +128,7 @@ public partial class MainWindow : Gtk.Window
 				quantums.Add(Convert.ToInt32(quantum3.Text));
 			if(quantum4.Text != "")
 				quantums.Add(Convert.ToInt32(quantum4.Text));
-			Processor processor = new Processor(nCores, nProcesses, 50, 0, 50, 0, 9, queues, quantums);
+			Processor processor = new Processor(nCores, nProcesses, 100, 0, 50, 0, 9, queues, quantums);
 			processor.StartSimulation();	
 		}
 		

@@ -52,7 +52,7 @@ public partial class MainWindow
 	private global::Gtk.Entry rrQuantum3;
 	private global::Gtk.Entry rrQuantum4;
 	private global::Gtk.Button StartButton;
-    
+	
 	protected virtual void Build ()
 	{
 		global::Stetic.Gui.Initialize (this);
@@ -81,7 +81,9 @@ public partial class MainWindow
 		this.vbox3.Name = "vbox3";
 		this.vbox3.Spacing = 6;
 		// Container child vbox3.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><menubar name='menubar2'><menu name='FileAction' action='FileAction'/><menu name='EditAction' action='EditAction'/><menu name='HelpAction' action='HelpAction'/></menubar></ui>");
+		this.UIManager.AddUiFromString ("<ui><menubar name=\'menubar2\'><menu name=\'FileAction\' action=\'FileAction\'/><menu n" +
+				"ame=\'EditAction\' action=\'EditAction\'/><menu name=\'HelpAction\' action=\'HelpAction" +
+				"\'/></menubar></ui>");
 		this.menubar2 = ((global::Gtk.MenuBar)(this.UIManager.GetWidget ("/menubar2")));
 		this.menubar2.Name = "menubar2";
 		this.vbox3.Add (this.menubar2);

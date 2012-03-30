@@ -205,7 +205,7 @@ namespace Sidimsp
 			
 			responseTime = 0;
 			for(int i = 0; i < _finishedProcesses.Count; i++){
-				responseTime += (_finishedProcesses[i].responseTime);	
+				responseTime += (_finishedProcesses[i].responseTime-_finishedProcesses[i].ArrivalTime);	
 			}
 			responseTime /= _finishedProcesses.Count;
 			GlobalVar.OutputMessage("Response Time is " + responseTime.ToString() + " clock cycles.");
